@@ -1,0 +1,17 @@
+# SSH key generate  - you only need to do this jsut the very first time you wanna do smth wiht the shared folder
+Open terminal anywhre and execute commands line by line
+ssh-keygen -t ed25519 -C "your_email@example.com"_
+Press enter 3 times
+cat ~/.ssh/id_ed25519.pub
+copy the public key and add it to the shared folder in the settings of github
+
+# Steps to upload your changes to the common folder
+Inside the folder open terminal and than execute git commands line by line
+git status 																#checks whether you folder version is up to date
+git add .  																#adds everything that has been changed in the folder (the point at the end means "everyting")
+git commit -m "your message in double quotes - what have you changed" 	#you make a new commit, meaning you decide to add the changed files/folders
+git push																#you push the changes,meaing you make it official and seeable to everyone
+
+# Steps to get all of the changes others made in the folder
+Inside the folder open terminal and than execute git commands line by line
+git pull
