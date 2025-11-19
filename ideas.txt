@@ -1,0 +1,66 @@
+📚 Student Grade Manager
+Track students and their grades with statistics
+
+# Menu options:
+1. Add student and grade
+2. Update student's grade
+3. Calculate class average
+4. Find highest/lowest grades
+5. List all students and grades
+6. Remove student
+7. Save/load grades to file
+8. Show grade distribution chart
+9. Exit
+
+💰 Personal Budget Tracker
+Manage income and expenses
+1. Add income transaction
+2. Add expense transaction  
+3. View current balance
+4. View spending by category
+5. Set monthly budget
+6. Delete transaction
+7. Save/load budget data
+8. Show spending pie chart
+9. Exit
+
+📖 Book Collection Manager
+Track your personal library
+
+# Menu options:
+1. Add new book (title, author, genre, year)
+2. Update book information
+3. Search books by author/genre
+4. List all books
+5. Remove book from collection
+6. Mark as read/unread
+7. Save/load collection
+8. Show statistics (books per genre, etc.)
+9. Exit
+
+🎬 Movie Watchlist
+Manage movies you want to watch or have watched
+# Menu options:
+1. Add movie (title, genre, year, rating)
+2. Update movie rating/status
+3. Filter by genre/rating
+4. List all movies
+5. Remove movie
+6. Mark as watched/unwatched
+7. Save/load watchlist
+8. Show recommendations based on ratings
+9. Exit
+
+🎵 Music Playlist Manager
+Manage your music collection
+
+# Menu options:
+1. Add song (title, artist, genre, duration)
+2. Update song information
+3. Search by artist/genre
+4. List all songs
+5. Remove song
+6. Create playlists
+7. Save/load music library
+8. Show most played artists
+9. Exit
