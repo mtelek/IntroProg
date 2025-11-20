@@ -1,5 +1,5 @@
-# SSH key generate  - you only need to do this just the very first time you wanna do smth wiht the shared folder
-Open terminal anywhre and execute commands line by line
+# SSH key generate  - you only need to do this just the very first time you wanna do smth with the shared folder
+Open terminal anywhere and execute commands line by line
 ssh-keygen -t ed25519 -C "your_email@example.com"_
 Press enter 3 times
 cat ~/.ssh/id_ed25519.pub
@@ -10,17 +10,17 @@ Inside your chosen folder open terminal and type:
 git clone git@github.com:mtelek/IntroProg.git
 
 # Steps to upload your changes to the common folder
-Before you upload something, check/ask the others whether they have already uuploaded something what you dont have inside your folder!
+Before you upload something, check/ask the others whether they have already uploaded something what you dont have inside your folder!
 If they already uploaded something and you dont have it the process is more complicated.
 First use git clone again (its gonna download all of the changes from others)
-and than in this folder implement your changes (copy paste you code into this new folder) and than you can continue with the steps below in the new fodler
+and than in this folder implement your changes (copy paste you code into this new folder) and than you can continue with the steps below in the new folder
 
 If no changes were made from others, just use these steps below.
 Inside the folder open terminal and than execute git commands line by line:
 git status 																#checks whether you folder version is up to date
-git add .  																#adds everything that has been changed in the folder (the point at the end means "everyting")
+git add .  																#adds everything that has been changed in the folder (the point at the end means "everything")
 git commit -m "your message in double quotes - what have you changed" 	#you make a new commit, meaning you decide to add the changed files/folders
-git push																#you push the changes,meaing you make it official and seeable to everyone
+git push																#you push the changes,meaning you make it official and seeable to everyone
 
 # Steps to get all of the changes others made in the folder
 Inside the folder open terminal and than execute git commands line by line:
