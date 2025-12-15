@@ -1,2 +1,5 @@
 print("ftfgsgfz")
-#fdhfhfhffhfhffhgfhgfudf
+
+import pandas as pandas2
+
+import file1
