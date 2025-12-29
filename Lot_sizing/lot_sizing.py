@@ -4,6 +4,7 @@ import os
 import sys
 from Lot_sizing import wagner_within as ww
 from Lot_sizing import just_in_time as jit
+from Lot_sizing import visualisation as vs
 from pathlib import Path
 
 # COLOR CODES
@@ -224,7 +225,8 @@ def run_lot_sizing(data=None):
 	if save == 'y':
 		save_results_to_csv(periods, demand, ww_plan, ww_inventory, 
 			jit_plan, jit_inventory, setup_cost, holding_cost)
-	
+	return periods, ww_plan, ww_inventory, jit_plan, jit_inventory
+
 def main():
 	signal = True
 	while True:
@@ -237,7 +239,8 @@ def main():
 			
 			if choice == '1':
 				data = generate_sample_data()
-				run_lot_sizing(data)
+				periods, ww_plan, ww_inventory, jit_plan, jit_inventory = run_lot_sizing(data)
+				vs.visualize_lot_sizing(periods, data['demand'], ww_plan, ww_inventory, jit_plan, jit_inventory)
 			elif choice == '2':
 				print_sample_data()
 			elif choice == '3':
@@ -246,7 +249,8 @@ def main():
 					filename = "lot_sizing_data_2.csv"
 				try:
 					data = load_lot_sizing_data(filename)
-					run_lot_sizing(data)
+					periods, ww_plan, ww_inventory, jit_plan, jit_inventory = run_lot_sizing(data)
+					vs.visualize_lot_sizing(periods, data['demand'], ww_plan, ww_inventory, jit_plan, jit_inventory)
 				
 				except FileNotFoundError as e:
 					print(e)
