@@ -1,0 +1,10 @@
+﻿;;;;
+;Consumption of Raw Materials;;;Inventory
+;Product X;Product Y;Product Z;
+Material A;17;20;23;1290
+Material B;10;5;18;1330
+Material C;0;12;16;600
+Material D;13;10;7;800
+Material E;22;25;21;1400
+Profit per piece;810;850;820;
+;;;;
