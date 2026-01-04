@@ -1,6 +1,5 @@
 import pandas as pd
-df=pd.read_csv("Dataset TSP.csv", sep=";") #sep bc pandas normally with ,;
-# also: chat wanted me to add index_col=0 but this messed the city names up (were the first line of distances)
+df=pd.read_csv("Dataset TSP.csv", sep=";") #sep because pandas normally with commas
 
 city_names = df.columns.tolist()[1:] #first column
 #print(df.columns.tolist()[1:])
