@@ -1,14 +1,5 @@
 import pandas as pd
-df=pd.read_csv("Dataset TSP.csv", sep=";") #sep because pandas normally with commas
 
-city_names = df.columns.tolist()[1:] #first column
-#print(df.columns.tolist()[1:])
-
-dist = df.iloc[:, 1:].to_numpy()    #only numerical values, saved as NumPy-Array
-#print(df)
-#print(dist.shape)   # (29, 29)
-#print(city_names[:5])
-#print(df.columns.tolist())
 
 def tsp_nearest_neighbor(dist, start=0):                #Nearest Neighbour Heuristic
     n = len(dist)               #n is the amount of rows in the df
@@ -23,8 +14,7 @@ def tsp_nearest_neighbor(dist, start=0):                #Nearest Neighbour Heuri
         current = next_city             #new start city
 
     return visited
-nn_route = tsp_nearest_neighbor(dist, start=0)      #nn route using indices
-#print("NN Route (Index):", nn_route)
+
 
 def route_length(route, dist):    #computes route length
     total = 0
@@ -33,13 +23,10 @@ def route_length(route, dist):    #computes route length
     total += dist[route[-1], route[0]]              #return to start city
     return total
 
-nn_length = route_length(nn_route, dist)
-print("Route length according to Nearest Neighbour:", nn_length)
 
 def route_to_names(route, city_names):      #Help function, displays route in readable format.
     return [city_names[i] for i in route]
 
-print(route_to_names(nn_route, city_names))
 
 def two_opt(route, dist):       #2-opt
     best = route
@@ -65,7 +52,29 @@ def two_opt(route, dist):       #2-opt
 
     return best, best_len
 
-opt_route, opt_length = two_opt(nn_route, dist)
 
-print("2-opt length:", opt_length)
-print(route_to_names(opt_route, city_names))    #although city 1 not mentioned in list end, distance has been added
+def run_tsp ():
+    df = pd.read_csv("Travelling_salesman_problem/Dataset TSP.csv", sep=";")
+    #sep because pandas normally with commas; folder hard coded
+
+    city_names = df.columns.tolist()[1:]  # first column
+    # print(df.columns.tolist()[1:])
+
+    dist = df.iloc[:, 1:].to_numpy()  # only numerical values, saved as NumPy-Array
+    # print(df)
+    # print(dist.shape)   # (29, 29)
+    # print(city_names[:5])
+    # print(df.columns.tolist())
+
+    nn_route = tsp_nearest_neighbor(dist, start=0)  # nn route using indices
+    # print("NN Route (Index):", nn_route)
+
+    nn_length = route_length(nn_route, dist)
+    print("Route length according to Nearest Neighbour:", nn_length)
+
+    print(route_to_names(nn_route, city_names))
+
+    opt_route, opt_length = two_opt(nn_route, dist)
+
+    print("2-opt length:", opt_length)
+    print(route_to_names(opt_route, city_names))    #although city 1 not mentioned in list end, distance has been added

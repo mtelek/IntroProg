@@ -1,7 +1,7 @@
 import sys
 from Lot_sizing import lot_sizing as ls
 from Master_production_schedule import mps
-from Travelling_salesmen_problem import tsp
+from Travelling_salesman_problem import tsp
 
 # USED FOR COLORING OUTPUT MESSAGES
 RED = '\033[91m'
@@ -19,9 +19,9 @@ def display_menu():
 	print(f"\n{BLUE}{'='*80}{RESET}")
 	print(f"{BLUE}{BOLD}{' '*38}MENU{RESET}")
 	print(f"{BLUE}{'='*80}{RESET}")
-	print("1. Master Production Schedule(MPS)")
+	print("1. Master Production Schedule (MPS)")
 	print("2. Lot Sizing")
-	print("3. Travelling Salesmen Problem(TSP)")
+	print("3. Travelling Salesman Problem (TSP)")
 	print("4. Exit")
 
 def main():
