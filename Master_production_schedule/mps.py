@@ -1,7 +1,7 @@
 #1. Master Production Scheduling:
 ########################################################################################################################
 def run_mps():
-	print("You chose Master Production Schedule(MPS)")
+    print("You chose Master Production Schedule (MPS)")
 ########################################################################################################################
 #Importing required libraries:
 import pandas as pd #Data handling
@@ -23,10 +23,28 @@ def load_mps_dataset_csv(file_path):
     dataset_MPS = dataset_MPS.dropna(subset=["Resource"])
     return dataset_MPS
 dataset_MPS = load_mps_dataset_csv("Dataset MPS.csv")
-#Printing header:
-print(dataset_MPS.head())
+#Saving updated Dataset as csv.file:
+def save_mps_dataset_csv(dataset_MPS, file_path="Dataset MPS.csv"):
+    """
+    Saves the current MPS dataset back to CSV.
+    """
+    dataset_MPS.to_csv(file_path, sep=";", index=False)
+    print("Changes saved successfully.")
+
+#Defining Function for printing Profits aswell as Resource constraints:
+def print_mps_matrix(dataset_MPS):
+    """
+    Prints profit row and resource constraint matrix.
+    """
+    print("\n--- PROFIT PER PRODUCT ---")
+    print(dataset_MPS[dataset_MPS["Resource"] == "Profit per piece"])
+
+    print("\n--- RESOURCE CONSTRAINTS ---")
+    print(dataset_MPS[dataset_MPS["Resource"] != "Profit per piece"])
+#Running function at beginning:
+print_mps_matrix(dataset_MPS)
 ########################################################################################################################
-#1. Calculate optimal production:
+#1. Calculating optimal production:
 #Idea: Gives the optimal number of each product. End.
 
 #Splitting the Dataset into MPS Components:
@@ -123,9 +141,22 @@ def display_mps_results(results):
 def update_profit(dataset_MPS):
     """
     Updates the profit of a selected product.
+    Re-prompts only the invalid input.
     """
-    product = input("Enter the product you want to change (X, Y, Z): ").upper()
-    new_profit = float(input("Enter the new profit for this product: "))
+    valid_products = {"X", "Y", "Z"}
+    #--- PRODUCT LOOP ---
+    while True:
+        product = input("Enter the product you want to change (X, Y, Z): ").upper()
+        if product in valid_products:
+            break
+        print("Invalid product. Please choose X, Y or Z.")
+    #--- PROFIT LOOP ---
+    while True:
+        try:
+            new_profit = float(input("Enter the new profit for this product: "))
+            break
+        except ValueError:
+            print("Invalid number. Please enter a numeric value.")
     column_name = f"Product_{product}"
     dataset_MPS.loc[
         dataset_MPS["Resource"] == "Profit per piece",
@@ -138,9 +169,22 @@ def update_profit(dataset_MPS):
 def update_inventory(dataset_MPS):
     """
     Updates the inventory of a selected resource.
+    Re-prompts only the invalid input.
     """
-    resource = input("Enter the resource name (e.g. Material A): ")
-    new_inventory = float(input("Enter the new inventory level: "))
+    resources = set(dataset_MPS["Resource"])
+    #--- RESOURCE LOOP ---
+    while True:
+        resource = input("Enter the resource name (e.g. Material A): ")
+        if resource in resources:
+            break
+        print("Invalid resource name. Please enter an existing resource.")
+    #--- INVENTORY LOOP ---
+    while True:
+        try:
+            new_inventory = float(input("Enter the new inventory level: "))
+            break
+        except ValueError:
+            print("Invalid number. Please enter a numeric value.")
     dataset_MPS.loc[
         dataset_MPS["Resource"] == resource,
         "Inventory"
@@ -152,10 +196,30 @@ def update_inventory(dataset_MPS):
 def update_resource_use(dataset_MPS):
     """
     Updates the resource consumption of a product.
+    Re-prompts only the invalid input instead of restarting everything.
     """
-    product = input("Enter the product (X, Y, Z): ").upper()
-    resource = input("Enter the resource (e.g. Material A): ")
-    new_value = float(input("Enter the new resource use: "))
+    valid_products = {"X", "Y", "Z"}
+    resources = set(dataset_MPS["Resource"])
+    #--- PRODUCT LOOP ---
+    while True:
+        product = input("Enter the product (X, Y, Z): ").upper()
+        if product in valid_products:
+            break
+        print("Invalid product. Please choose X, Y or Z.")
+    #--- RESOURCE LOOP ---
+    while True:
+        resource = input("Enter the resource (e.g. Material A): ")
+        if resource in resources:
+            break
+        print("Invalid resource name. Please enter an existing resource.")
+    #--- VALUE LOOP ---
+    while True:
+        try:
+            new_value = float(input("Enter the new resource use: "))
+            break
+        except ValueError:
+            print("Invalid number. Please enter a numeric value.")
+    #Update dataset:
     column_name = f"Product_{product}"
     dataset_MPS.loc[
         dataset_MPS["Resource"] == resource,
@@ -176,8 +240,9 @@ def run_mps_menu():
         print("2. Update profits")
         print("3. Update inventory")
         print("4. Update resource use")
-        print("5. Go back to main menu")
-        choice = input("Choose an option (1–5): ")
+        print("5. Save data changes as .csv")
+        print("6. Go back to main menu")
+        choice = input("Choose an option (1–6): ")
         #-----------------------------------
         #1. Calculating optimal production:
         if choice == "1":
@@ -188,22 +253,33 @@ def run_mps_menu():
         #2. Updating new profits:
         elif choice == "2":
             update_profit(dataset_MPS)
+            print_mps_matrix(dataset_MPS)
         #-----------------------------------
         #3. Updating new inventory:
         elif choice == "3":
             update_inventory(dataset_MPS)
+            print_mps_matrix(dataset_MPS)
         #-----------------------------------
         #4. Updating new resource use:
         elif choice == "4":
             update_resource_use(dataset_MPS)
-        # ----------------------------------
-        #5. Exiting 1. MSP-menu:
+            print_mps_matrix(dataset_MPS)
+        #----------------------------------
+        #5. Saving data changes as .csv:
         elif choice == "5":
+            confirm = input("Save all changes to CSV? (Y/N): ").upper()
+            if confirm == "Y":
+                save_mps_dataset_csv(dataset_MPS)
+            else:
+                print("Save canceled.")
+        #----------------------------------
+        #6. Exiting 1. MSP-menu:
+        elif choice == "6":
             print("Returning to main menu...")
             break
         else:
-            print("Invalid choice. Please select a number between 1 and 5.")
+            print("Invalid choice. Please select a number between 1 and 6.")
 ########################################################################################################################
-#Starting 1. MPS-Menu:
+#Running 1. MPS-Menu:
 run_mps_menu()
 ########################################################################################################################
