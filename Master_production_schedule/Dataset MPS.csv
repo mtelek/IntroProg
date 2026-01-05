@@ -1,0 +1,7 @@
+Resource;Product_X;Product_Y;Product_Z;Inventory
+Material A;17.0;20.0;23.0;1290.0
+Material B;10.0;5.0;18.0;1330.0
+Material C;0.0;12.0;16.0;600.0
+Material D;13.0;10.0;7.0;800.0
+Material E;22.0;25.0;21.0;1400.0
+Profit per piece;810.0;850.0;820.0;
