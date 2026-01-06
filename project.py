@@ -35,7 +35,7 @@ def main():
 			choice = input("\nEnter your choice (1-4): ").strip()
 
 			if choice == '1':
-				mps.run_mps()
+				mps.run_mps_menu()
 			elif choice == '2':
 				ls.main()
 			elif choice == '3':
