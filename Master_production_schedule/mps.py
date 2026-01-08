@@ -32,18 +32,36 @@ def save_mps_dataset_csv(dataset_MPS, file_path="Dataset MPS.csv"):
 	dataset_MPS.to_csv(file_path, sep=";", index=False)
 	print("Changes saved successfully.")
 
-#Defining Function for printing Profits aswell as Resource constraints:
-def print_mps_matrix(dataset_MPS):
+#Defining Functions for printing Profits aswell as current MPS-data:
+def print_profit_summary(dataset_MPS):
 	"""
-	Prints profit row and resource constraint matrix.
+	Prints a compact profit overview for each product.
 	"""
+	profit = dataset_MPS[dataset_MPS["Resource"] == "Profit per piece"].iloc[0]
 	print("\n--- PROFIT PER PRODUCT ---")
-	print(dataset_MPS[dataset_MPS["Resource"] == "Profit per piece"])
+	print(f"Product X: {profit['Product_X']}")
+	print(f"Product Y: {profit['Product_Y']}")
+	print(f"Product Z: {profit['Product_Z']}")
+
+def show_mps_overview(dataset_MPS):
+	"""
+	Shows a clear overview of the current MPS data.
+	"""
+	print(f"\n{CYAN}{'='*80}{RESET}")
+	print(f"{CYAN}{BOLD}{' '*20}CURRENT MPS DATA OVERVIEW{RESET}")
+	print(f"{CYAN}{'='*80}{RESET}")
+
+	print_profit_summary(dataset_MPS)
 
 	print("\n--- RESOURCE CONSTRAINTS ---")
 	print(dataset_MPS[dataset_MPS["Resource"] != "Profit per piece"])
-#Running function at beginning:
-#print_mps_matrix(dataset_MPS)
+
+def refresh_view(dataset_MPS):
+	"""
+	Refreshes the displayed MPS data after changes.
+	"""
+	print("\nData updated successfully.")
+	show_mps_overview(dataset_MPS)
 ########################################################################################################################
 #1. Calculating optimal production:
 #Idea: Gives the optimal number of each product. End.
@@ -89,7 +107,7 @@ def solve_mps(profits, inventories, consumption):
 	#1. Creating optimization model:
 	model = pulp.LpProblem("Master_Production_Schedule", pulp.LpMaximize)
 	#-----------------------------------
-	#2. Defining the Decision variables:
+	#2. Defining the Decision variables (Assumption of no real Minimum/Maximum Production Constraints!):
 	x_X = pulp.LpVariable("Produce_X", lowBound=0)
 	x_Y = pulp.LpVariable("Produce_Y", lowBound=0)
 	x_Z = pulp.LpVariable("Produce_Z", lowBound=0)
@@ -220,7 +238,7 @@ def update_resource_use(dataset_MPS):
 			break
 		except ValueError:
 			print("Invalid number. Please enter a numeric value.")
-	#Update dataset:
+	#Updating dataset:
 	column_name = f"Product_{product}"
 	dataset_MPS.loc[
 		dataset_MPS["Resource"] == resource,
@@ -235,6 +253,10 @@ def run_mps_menu():
 	"""
 	#Loading dataset:
 	dataset_MPS = load_mps_dataset_csv("Master_production_schedule/Dataset MPS.csv")
+
+	#Printing mps-overview after selecting relevant menu-options:
+	show_mps_overview(dataset_MPS)
+
 	signal = True
 	while True:
 		if signal == True:
@@ -247,51 +269,55 @@ def run_mps_menu():
 			print("4. Update resource use")
 			print("5. Save data changes as .csv")
 			print("6. Go back to main menu")
+
 		signal = True
 		try:
 			choice = input("\nEnter your choice (1-6): ")
-			#-----------------------------------
+
 			#1. Calculating optimal production:
 			if choice == "1":
 				profits, inventories, consumption = split_mps_data(dataset_MPS)
 				results = solve_mps(profits, inventories, consumption)
 				display_mps_results(results)
-			#-----------------------------------
-			#2. Updating new profits:
+
+			#2. Updating profits:
 			elif choice == "2":
 				update_profit(dataset_MPS)
-				print_mps_matrix(dataset_MPS)
-			#-----------------------------------
-			#3. Updating new inventory:
+				refresh_view(dataset_MPS)
+
+			#3. Updating inventory:
 			elif choice == "3":
 				update_inventory(dataset_MPS)
-				print_mps_matrix(dataset_MPS)
-			#-----------------------------------
-			#4. Updating new resource use:
+				refresh_view(dataset_MPS)
+
+			#4. Updating resource use:
 			elif choice == "4":
 				update_resource_use(dataset_MPS)
-				print_mps_matrix(dataset_MPS)
-			#----------------------------------
-			#5. Saving data changes as .csv:
+				refresh_view(dataset_MPS)
+
+			#5. Saving changes:
 			elif choice == "5":
 				confirm = input("Save all changes to CSV? (Y/N): ").upper()
 				if confirm == "Y":
 					save_mps_dataset_csv(dataset_MPS)
 				else:
 					print("Save canceled.")
-			#----------------------------------
-			#6. Exiting 1. MSP-menu:
+
+			#6. Returning to main menu:
 			elif choice == "6":
 				print("Returning to main menu...")
 				break
+
 			else:
 				print("Invalid choice. Please select a number between 1 and 6.")
 				continue
+
 			input("\nPress Enter to continue...")
-		except EOFError: # WHEN PRESSING Ctrl+D
+
+		except EOFError:
 			signal = False
 			continue
-		except KeyboardInterrupt: # WHEN PRESSING Ctrl+C
+		except KeyboardInterrupt:
 			print("\n\nQuitting to main menu...")
 			break
 ########################################################################################################################
