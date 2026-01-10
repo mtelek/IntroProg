@@ -70,6 +70,8 @@ def run_tsp ():
 	# print("NN Route (Index):", nn_route)
 
 	nn_length = route_length(nn_route, dist)
+ 
+	print("\n\033[35mCalculating TSP solution using preset data...\033[0m")
 	print("\nRoute length according to Nearest Neighbour:", nn_length)
 
 	print(route_to_names(nn_route, city_names))

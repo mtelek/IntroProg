@@ -1,3 +1,23 @@
+# ============================================================
+# REQUIRED LIBRARIES (INSTALL BEFORE RUNNING THIS PROGRAM)
+#
+# This program uses the following Python libraries:
+# - pandas       : data handling and analysis
+# - numpy        : numerical computations
+# - matplotlib   : plotting and visualization
+# - pulp         : linear programming / optimization
+#
+# To install all required libraries, run ONE of the following
+# commands in your terminal or command prompt:
+#
+# Using pip:
+#   pip install pandas numpy matplotlib pulp
+#
+# Using conda:
+#   conda install pandas numpy matplotlib pulp
+#
+# ============================================================
+
 import sys
 from Lot_sizing import lot_sizing as ls
 from Master_production_schedule import mps
@@ -15,7 +35,7 @@ BOLD = '\033[1m'
 RESET = '\033[0m'
 
 def display_menu():
-    # DISPLAYING MAIN MENU
+	# DISPLAYING MAIN MENU
 	print(f"\n{BLUE}{'='*80}{RESET}")
 	print(f"{BLUE}{BOLD}{' '*38}MENU{RESET}")
 	print(f"{BLUE}{'='*80}{RESET}")
@@ -25,6 +45,7 @@ def display_menu():
 	print("4. Exit")
 
 def main():
+    #SIGNAL FOR DECIDING TO DISPLAY MENU OR NOT
 	signal = True
 	while True:
 		if (signal == True):
@@ -53,7 +74,8 @@ def main():
 			print("\n\nProgram interrupted. Closing program...")
 			sys.exit(0)
 		except Exception as e: # WHEN HAVING ERRORS
-			print(f"An error occurred: {e}")
+			signal = False
+			print(f"An error occurred: {e}", end="")
 
 if __name__ == "__main__":
 	main()

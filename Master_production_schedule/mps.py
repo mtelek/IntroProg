@@ -6,6 +6,7 @@ import pulp #Linear programming
 ########################################################################################################################
 #Setting colors as global variables
 CYAN = '\033[96m'
+YELLOW = '\033[93m'
 RESET = '\033[0m'
 BOLD = '\033[1m'
 #Loading & Cleaning Dataset:
@@ -47,9 +48,9 @@ def show_mps_overview(dataset_MPS):
 	"""
 	Shows a clear overview of the current MPS data.
 	"""
-	print(f"\n{CYAN}{'='*80}{RESET}")
-	print(f"{CYAN}{BOLD}{' '*20}CURRENT MPS DATA OVERVIEW{RESET}")
-	print(f"{CYAN}{'='*80}{RESET}")
+	print(f"\n{YELLOW}{'='*80}{RESET}")
+	print(f"{YELLOW}{BOLD}{' '*27}CURRENT MPS DATA OVERVIEW{RESET}")
+	print(f"{YELLOW}{'='*80}{RESET}")
 
 	print_profit_summary(dataset_MPS)
 
